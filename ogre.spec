@@ -1,35 +1,39 @@
+# TODO
+# - unify ogre caps
+%define 	_rc	RC1
+%define 	_rel 0.1
 Summary:	Ogre
 Summary(pl):	Ogre
 Name:		ogre
-Version:	1.2.0rc1
-%define 	_RC	rc1
-Release:	0.%{_RC}_1
+Version:	1.2.0
+Release:	%{_rc}.%{_rel}
 License:	LGPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0RC1.tar.bz2
+Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
 # Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
-#Patch0:		%{name}-DESTDIR.patch
+#Patch0: %{name}-DESTDIR.patch
 URL:		http://www.ogre3d.org/
+BuildRequires:	DevIL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	zziplib-devel
-BuildRequires:	DevIL-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-OGRE Library 
+OGRE Library
 
 %package examples
 Summary:	ogre samples
 Group:		Examples
+######		Unknown group!
 
 %description examples
 OGRE samples
 
 %package devel
-Summary:	Header files for ... library
-Summary(pl):	Pliki nag³ówkowe biblioteki ...
+Summary:	Header files for OGRE library
+Summary(pl):	Pliki nag³ówkowe biblioteki OGRE
 Group:		Development/Libraries
 #Requires:	%{name} = %{version}-%{release}
 
@@ -40,10 +44,10 @@ This is the package containing the header files for OGRE library.
 Ten pakiet zawiera pliki nag³ówkowe biblioteki OGRE
 
 %prep
-%setup -q -n ogrenew
+%setup -q -n %{name}new
 #%patch0 -p1
 
-find . -name CVS -print0 | xargs -0 rm -rf
+find -name CVS -print0 | xargs -0 rm -rf
 
 %build
 %{__libtoolize}
