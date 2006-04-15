@@ -19,10 +19,7 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	zziplib-devel
-<<<<<<< ogre.spec
 BuildRequires:	DevIL-devel >= 1.6.7
-=======
->>>>>>> 1.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -83,8 +80,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS README INSTALL
-%attr(755,root,root) %{_libdir}/libOgre*so*
 %attr(755,root,root) %{_bindir}/Ogre*
+%attr(755,root,root) %{_libdir}/libOgre*so*
+%{_libdir}/OGRE/Plugin_*.la
+%{_libdir}/OGRE/RenderSystem_GL.la
 
 %files devel
 %defattr(644,root,root,755)
