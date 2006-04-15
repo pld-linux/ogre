@@ -13,11 +13,16 @@ Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
 # Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
 #Patch0: %{name}-DESTDIR.patch
 URL:		http://www.ogre3d.org/
-BuildRequires:	DevIL-devel
+BuildRequires:	DevIL-devel >= 1.6.7
+
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool
 BuildRequires:	zziplib-devel
+<<<<<<< ogre.spec
+BuildRequires:	DevIL-devel >= 1.6.7
+=======
+>>>>>>> 1.3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
