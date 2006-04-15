@@ -1,9 +1,9 @@
-%define 	_rc	0.RC1.1
+%define 	_rc	RC1
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.2.0
-Release:	%{_rc}
+Release:	0.%{_rc}.1
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
