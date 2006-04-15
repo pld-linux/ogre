@@ -1,12 +1,11 @@
 # TODO
 # - unify ogre caps
-%define 	_rc	RC1
-%define 	_rel 0.1
+%define 	_rc	0.RC1.1
 Summary:	Ogre
 Summary(pl):	Ogre
 Name:		ogre
 Version:	1.2.0
-Release:	%{_rc}.%{_rel}
+Release:	%{_rc}
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
