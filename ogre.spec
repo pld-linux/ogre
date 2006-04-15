@@ -84,6 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libOgre*so*
 %{_libdir}/OGRE/Plugin_*.la
 %{_libdir}/OGRE/RenderSystem_GL.la
+%{_libdir}/libOgre*.la
 
 %files devel
 %defattr(644,root,root,755)
