@@ -1,13 +1,9 @@
-#
-# Conditional build:
-%bcond_with	tests		# build with tests
-%bcond_without	tests		# build without tests
-#
 Summary:	Ogre
 Summary(pl):	Ogre
 Name:		ogre
 Version:	1.2.0rc1
-Release:	0.1
+%define 	_RC	rc1
+Release:	0.%{_RC}_1
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0RC1.tar.bz2
@@ -24,14 +20,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 OGRE Library 
 
-
 %package examples
 Summary:	ogre samples
 Group:		Examples
 
 %description examples
 OGRE samples
-
 
 %package devel
 Summary:	Header files for ... library
