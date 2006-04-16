@@ -11,6 +11,7 @@ Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
 # Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
 URL:		http://www.ogre3d.org/
 BuildRequires:	DevIL-devel >= 1.6.7
+BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf >= 2.50
@@ -24,7 +25,6 @@ BuildRequires:	sed >= 4.0
 # X11R7: xorg-lib-libXt-devel xorg-lib-libXaw-devel xorg-lib-libXrandr-devel
 BuildRequires:	zlib-devel
 BuildRequires:	zziplib-devel
-# OpenEXR-devel (disabled by default)
 # CEGUI >= 0.3.0 ???
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -80,7 +80,8 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
-	--disable-cg
+	--disable-cg \
+	--enable-openexr
 
 %{__make}
 
