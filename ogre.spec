@@ -11,16 +11,25 @@ Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
 # Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
 URL:		http://www.ogre3d.org/
 BuildRequires:	DevIL-devel >= 1.6.7
-BuildRequires:	autoconf
+BuildRequires:	XFree86-devel
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	libtool
+BuildRequires:	cppunit-devel >= 1.10.0
+BuildRequires:	freetype-devel >= 2.1.0
+BuildRequires:	libtool >= 2:1.5
+BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
+# X11R7: xorg-lib-libXt-devel xorg-lib-libXaw-devel xorg-lib-libXrandr-devel
+BuildRequires:	zlib-devel
 BuildRequires:	zziplib-devel
+# OpenEXR-devel (disabled by default)
+# CEGUI >= 0.3.0 ???
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Object-oriented Graphics Rendering Engine.
 
-%description -l Pl
+%description -l pl
 OGRE - zorientowany obiektowo silnik renderowania grafiki
 
 %package devel
@@ -50,6 +59,11 @@ Przyk³ady do OGRE.
 %setup -q -n %{name}new
 
 find -name CVS -print0 | xargs -0 rm -rf
+
+sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
+# X11R7
+#sed -i -e 's,"-L/usr/X11R6/lib ,",' acinclude.m4
+#sed -i -e 's,="-I/usr/X11R6/include",=,' acinclude.m4
 
 %build
 %{__libtoolize}
