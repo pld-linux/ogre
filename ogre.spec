@@ -11,6 +11,7 @@ Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
 # Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
 URL:		http://www.ogre3d.org/
 BuildRequires:	DevIL-devel >= 1.6.7
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -38,6 +39,12 @@ Summary:	Header files for OGRE library
 Summary(pl):	Pliki nag³ówkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	DevIL-devel >= 1.6.7
+Requires:	freetype-devel >= 2.1.0
+Requires:	libstdc++-devel
+Requires:	zlib-devel
+Requires:	zziplib-devel
+# libOgrePlatform additionally: XFree86-devel/xorg-lib-libX11-devel OpenGL-GLU-devel
 
 %description devel
 This is the package containing the header files for OGRE library.
@@ -85,6 +92,8 @@ cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+rm -f $RPM_BUILD_ROOT%{_libdir}/OGRE/*.la
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -97,10 +106,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/Ogre*
 %attr(755,root,root) %{_libdir}/libOgre*.so.*.*.*
 %dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/*so
-# needed or drop?
-%{_libdir}/OGRE/Plugin_*.la
-%{_libdir}/OGRE/RenderSystem_GL.la
+%attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
