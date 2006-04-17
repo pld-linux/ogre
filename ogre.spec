@@ -25,7 +25,7 @@ BuildRequires:	sed >= 4.0
 # X11R7: xorg-lib-libXt-devel xorg-lib-libXaw-devel xorg-lib-libXrandr-devel
 BuildRequires:	zlib-devel
 BuildRequires:	zziplib-devel
-# CEGUI >= 0.3.0 ???
+# CEGUI >= 0.3.0, http://www.cegui.org.uk/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
