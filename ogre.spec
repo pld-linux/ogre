@@ -1,7 +1,7 @@
 %define 	_rc	RC1
 %define 	_rel	1
 Summary:	Object-oriented Graphics Rendering Engine
-Summary(pl):	OGRE - zorientowany obiektowo silnik renderowania grafiki
+Summary(pl.UTF-8):   OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.2.0
 Release:	0.%{_rc}.%{_rel}
@@ -31,12 +31,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Object-oriented Graphics Rendering Engine.
 
-%description -l pl
+%description -l pl.UTF-8
 OGRE - zorientowany obiektowo silnik renderowania grafiki
 
 %package devel
 Summary:	Header files for OGRE library
-Summary(pl):	Pliki nag³ówkowe biblioteki OGRE
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	DevIL-devel >= 1.6.7
@@ -49,19 +49,19 @@ Requires:	zziplib-devel
 %description devel
 This is the package containing the header files for OGRE library.
 
-%description devel -l pl
-Ten pakiet zawiera pliki nag³ówkowe biblioteki OGRE.
+%description devel -l pl.UTF-8
+Ten pakiet zawiera pliki nagÅ‚Ã³wkowe biblioteki OGRE.
 
 %package examples
 Summary:	OGRE samples
-Summary(pl):	Przyk³ady do OGRE
+Summary(pl.UTF-8):   PrzykÅ‚ady do OGRE
 Group:		Applications
 
 %description examples
 OGRE samples.
 
-%description examples -l pl
-Przyk³ady do OGRE.
+%description examples -l pl.UTF-8
+PrzykÅ‚ady do OGRE.
 
 %prep
 %setup -q -n %{name}new
