@@ -1,7 +1,7 @@
 %define 	_rc	RC1
 %define 	_rel	1
 Summary:	Object-oriented Graphics Rendering Engine
-Summary(pl.UTF-8):   OGRE - zorientowany obiektowo silnik renderowania grafiki
+Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.2.0
 Release:	0.%{_rc}.%{_rel}
@@ -36,7 +36,7 @@ OGRE - zorientowany obiektowo silnik renderowania grafiki
 
 %package devel
 Summary:	Header files for OGRE library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki OGRE
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	DevIL-devel >= 1.6.7
@@ -54,7 +54,7 @@ Ten pakiet zawiera pliki nagłówkowe biblioteki OGRE.
 
 %package examples
 Summary:	OGRE samples
-Summary(pl.UTF-8):   Przykłady do OGRE
+Summary(pl.UTF-8):	Przykłady do OGRE
 Group:		Applications
 
 %description examples
