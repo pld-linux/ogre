@@ -1,14 +1,13 @@
-%define 	_rc	RC1
-%define 	_rel	1
+%define _ver    %(echo %{version} | tr . -)
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.2.0
-Release:	0.%{_rc}.%{_rel}
+Version:	1.2.5
+Release:	1
 License:	LGPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v1-2-0%{_rc}.tar.bz2
-# Source0-md5:	23e17ef81f1d7e159c0ba626a27c7681
+Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v%{_ver}.tar.bz2
+# Source0-md5:	b4c9c0e6dda14009c8e7a29de876d9a1
 URL:		http://www.ogre3d.org/
 BuildRequires:	DevIL-devel >= 1.6.7
 BuildRequires:	OpenEXR-devel
@@ -81,6 +80,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__automake}
 %configure \
 	--disable-cg \
+	--disable-freeimage \
 	--enable-openexr
 
 %{__make}
