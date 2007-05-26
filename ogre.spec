@@ -9,7 +9,7 @@ Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v%{_ver}.tar.bz2
 # Source0-md5:	b4c9c0e6dda14009c8e7a29de876d9a1
 URL:		http://www.ogre3d.org/
-BuildRequires:	DevIL-devel >= 1.6.7
+BuildRequires:	FreeImage-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	XFree86-devel
@@ -38,7 +38,7 @@ Summary:	Header files for OGRE library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	DevIL-devel >= 1.6.7
+Requires:	FreeImage-devel >= 1.6.7
 Requires:	freetype-devel >= 2.1.0
 Requires:	libstdc++-devel
 Requires:	zlib-devel
@@ -80,7 +80,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__automake}
 %configure \
 	--disable-cg \
-	--disable-freeimage \
+	--disable-devil \
 	--enable-openexr
 
 %{__make}
