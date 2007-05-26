@@ -121,7 +121,12 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libOgre*.so
 %attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/*.so
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_EXRCodec.so
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_OctreeSceneManager.so
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so
+%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so
+%{?with_cg:%attr(755,root,root) %{_libdir}/OGRE/Plugin_CgProgramManager.so}
 
 %files devel
 %defattr(644,root,root,755)
