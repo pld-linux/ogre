@@ -1,6 +1,13 @@
 # TODO:
 # - better fix for --as-needed (im too stupid to fix this in a correct way:/)
 #
+# Conditional build:
+%bcond_without	cg		# don't build with cg
+
+%ifnarch %{ix86} %{x8664}
+%undefine	with_cg
+%endif
+
 %define _ver    %(echo %{version} | tr . -)
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
@@ -18,7 +25,7 @@ BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
-BuildRequires:	cg-devel
+%{?with_cg:BuildRequires:	cg-devel}
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
@@ -84,6 +91,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
+	%{!?with_cg:--disable-cg} \
 	--disable-devil \
 	--enable-openexr
 
@@ -111,19 +119,19 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS README INSTALL
 %attr(755,root,root) %{_bindir}/Ogre*
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
+%{?with_cg:%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so}
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
+%{?with_cg:%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so}
 %{_libdir}/libOgreMain.la
-%{_libdir}/libCEGUIOgreRenderer.la
+%{?with_cg:%{_libdir}/libCEGUIOgreRenderer.la}
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
-%{_pkgconfigdir}/CEGUI-OGRE.pc
+%{?with_cg:%{_pkgconfigdir}/CEGUI-OGRE.pc}
 
 %files examples
 %defattr(644,root,root,755)
