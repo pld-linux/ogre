@@ -119,19 +119,19 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS README INSTALL
 %attr(755,root,root) %{_bindir}/Ogre*
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%{?with_cg:%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so}
+%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%{?with_cg:%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so}
+%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %{_libdir}/libOgreMain.la
-%{?with_cg:%{_libdir}/libCEGUIOgreRenderer.la}
+%{_libdir}/libCEGUIOgreRenderer.la
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
-%{?with_cg:%{_pkgconfigdir}/CEGUI-OGRE.pc}
+%{_pkgconfigdir}/CEGUI-OGRE.pc
 
 %files examples
 %defattr(644,root,root,755)
