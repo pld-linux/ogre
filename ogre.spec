@@ -1,31 +1,39 @@
+# TODO:
+# - better fix for --as-needed (im too stupid to fix this in a correct way:/)
+#
 %define _ver    %(echo %{version} | tr . -)
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.2.5
-Release:	1
+Version:	1.4.1
+Release:	0.1
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v%{_ver}.tar.bz2
-# Source0-md5:	b4c9c0e6dda14009c8e7a29de876d9a1
+# Source0-md5:	cbabbfddc5f1a2c76480eb5fc9d87b37
 URL:		http://www.ogre3d.org/
+BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	XFree86-devel
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
+BuildRequires:	cg-devel
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
-# X11R7: xorg-lib-libXt-devel xorg-lib-libXaw-devel xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXaw-devel
+BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXxf86vm-devel
+BuildRequires:	xorg-proto-xf86vidmodeproto-devel
 BuildRequires:	zlib-devel
 BuildRequires:	zziplib-devel
-# CEGUI >= 0.3.0, http://www.cegui.org.uk/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define         filterout_ld    -Wl,--as-needed
 
 %description
 Object-oriented Graphics Rendering Engine.
@@ -38,7 +46,7 @@ Summary:	Header files for OGRE library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	FreeImage-devel >= 1.6.7
+Requires:	FreeImage-devel
 Requires:	freetype-devel >= 2.1.0
 Requires:	libstdc++-devel
 Requires:	zlib-devel
@@ -68,9 +76,6 @@ Przykłady do OGRE.
 find -name CVS -print0 | xargs -0 rm -rf
 
 sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
-# X11R7
-#sed -i -e 's,"-L/usr/X11R6/lib ,",' acinclude.m4
-#sed -i -e 's,="-I/usr/X11R6/include",=,' acinclude.m4
 
 %build
 %{__libtoolize}
@@ -79,7 +84,6 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
-	--disable-cg \
 	--disable-devil \
 	--enable-openexr
 
@@ -87,6 +91,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
@@ -105,17 +110,20 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS README INSTALL
 %attr(755,root,root) %{_bindir}/Ogre*
-%attr(755,root,root) %{_libdir}/libOgre*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgre*.so
+%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
-%doc Docs/*
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%{_libdir}/libOgre*.la
+%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
+%{_libdir}/libOgreMain.la
+%{_libdir}/libCEGUIOgreRenderer.la
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
+%{_pkgconfigdir}/CEGUI-OGRE.pc
 
 %files examples
 %defattr(644,root,root,755)
