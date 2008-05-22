@@ -12,12 +12,12 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.4.1
-Release:	0.1
+Version:	1.4.8
+Release:	1
 License:	LGPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/ogre/%{name}-linux_osx-v%{_ver}.tar.bz2
-# Source0-md5:	cbabbfddc5f1a2c76480eb5fc9d87b37
+Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
+# Source0-md5:	c9034bdbd4c7cd79a4dd38811765262a
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
@@ -78,7 +78,7 @@ OGRE samples.
 Przykłady do OGRE.
 
 %prep
-%setup -q -n %{name}new
+%setup -q -n %{name}
 
 find -name CVS -print0 | xargs -0 rm -rf
 
