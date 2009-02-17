@@ -12,12 +12,12 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.4.8
-Release:	1
+Version:	1.6.1
+Release:	0.3
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
-# Source0-md5:	c9034bdbd4c7cd79a4dd38811765262a
+# Source0-md5:	6fbd72e81dd4c135a2cc4f78d596aeb4
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
