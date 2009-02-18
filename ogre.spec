@@ -91,7 +91,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
-	--%{?with_cg:en}{!?with_cg:dis}able-cg \
+	%{?with_cg:--en}{!?with_cg:--dis}able-cg \
 	--disable-devil \
 	--enable-openexr
 
