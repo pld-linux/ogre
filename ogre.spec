@@ -93,7 +93,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %configure \
 	--%{?with_cg:en}%{!?with_cg:dis}able-cg \
 	--disable-devil \
-	--enable-openexr
+	--disable-openexr
 
 %{__make}
 
@@ -122,7 +122,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so
-%attr(755,root,root) %{_libdir}/OGRE/Plugin_EXRCodec.so
+## %attr(755,root,root) %{_libdir}/OGRE/Plugin_EXRCodec.so
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_OctreeSceneManager.so
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so
