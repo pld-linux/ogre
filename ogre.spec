@@ -2,7 +2,7 @@
 # - better fix for --as-needed (im too stupid to fix this in a correct way:/)
 #
 # Conditional build:
-%bcond_without	cg		# don't build with cg
+%bcond_with	cg		# build with cg
 
 %ifnarch %{ix86} %{x8664}
 %undefine	with_cg
@@ -91,7 +91,7 @@ sed -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 %{__autoheader}
 %{__automake}
 %configure \
-	%{!?with_cg:--disable-cg} \
+	%{?with_cg:--enable-cg} \
 	--disable-devil \
 	--enable-openexr
 
