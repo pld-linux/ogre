@@ -13,7 +13,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.6.1
-Release:	0.3
+Release:	1
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
@@ -118,15 +118,11 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS README INSTALL
 %attr(755,root,root) %{_bindir}/Ogre*
+%attr(755,root,root) %{_bindir}/rcapsdump
 %attr(755,root,root) %{_libdir}/libOgre*.so
 %attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so
-## %attr(755,root,root) %{_libdir}/OGRE/Plugin_EXRCodec.so
-%attr(755,root,root) %{_libdir}/OGRE/Plugin_OctreeSceneManager.so
-%attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so
-%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so
-%{?with_cg:%attr(755,root,root) %{_libdir}/OGRE/Plugin_CgProgramManager.so}
+%attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
