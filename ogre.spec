@@ -1,5 +1,3 @@
-# TODO:
-# - better fix for --as-needed (im too stupid to fix this in a correct way:/)
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -12,12 +10,12 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.6.1
+Version:	1.6.2
 Release:	1
 License:	LGPL
 Group:		Applications
 Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
-# Source0-md5:	6fbd72e81dd4c135a2cc4f78d596aeb4
+# Source0-md5:	0f7e80fc255ad6ffe77151e4a08010be
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
@@ -39,8 +37,6 @@ BuildRequires:	xorg-proto-xf86vidmodeproto-devel
 BuildRequires:	zlib-devel
 BuildRequires:	zziplib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define         filterout_ld    -Wl,--as-needed
 
 %description
 Object-oriented Graphics Rendering Engine.
