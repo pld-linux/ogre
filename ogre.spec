@@ -29,7 +29,6 @@ BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
-BuildRequires:	sed >= 4.0
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
@@ -75,10 +74,6 @@ Przykłady do OGRE.
 
 %prep
 %setup -q -n %{name}
-
-find -name CVS -print0 | xargs -0 rm -rf
-
-%{__sed} -i -e 's,"-L/usr/X11R6/lib ,"-L/usr/X11R6/%{_lib} ,' acinclude.m4
 
 %build
 %{__libtoolize}
