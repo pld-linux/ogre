@@ -1,4 +1,6 @@
 #
+# TODO: --enable-ogre-demos?
+#
 # Conditional build:
 %bcond_with	cg		# build with cg
 
