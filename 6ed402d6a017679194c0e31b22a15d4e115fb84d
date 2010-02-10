@@ -1,0 +1,4 @@
+- start update to 1.7.0
+- cmake build system
+- remove duplicated shared objects from main package
+- more TODO
