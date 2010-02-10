@@ -1,5 +1,8 @@
 #
-# TODO: --enable-ogre-demos?
+# TODO: - --enable-ogre-demos?
+#	- enable static libs
+#	- check if cmake use our flags
+#	- check BRs
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -8,28 +11,27 @@
 %undefine	with_cg
 %endif
 
+%define	_rc	RC1
 %define _ver    %(echo %{version} | tr . -)
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.6.5
-Release:	1
+Version:	1.7.0
+Release:	0.%{_rc}.1
 License:	LGPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
-# Source0-md5:	9e863029f3befe013adefa7f66dbb13c
+Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}%{_rc}.tar.bz2
+# Source0-md5:	d6c69a7b52b633cebc74b30c11954825
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
 %{?with_cg:BuildRequires:	cg-devel}
+BuildRequires:	cmake
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXrandr-devel
@@ -78,15 +80,9 @@ Przykłady do OGRE.
 %setup -q -n %{name}
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--%{?with_cg:en}%{!?with_cg:dis}able-cg \
-	--disable-devil \
-	--disable-openexr
+mkdir build && cd build
+%cmake .. \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
 
 %{__make}
 
@@ -96,6 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -108,24 +105,23 @@ rm -rf $RPM_BUILD_ROOT
 %postun	-p /sbin/ldconfig
 
 %files
-%defattr(644,root,root,755)
-%doc AUTHORS BUGS README INSTALL
+#%defattr(644,root,root,755)
+#%doc AUTHORS BUGS README INSTALL
 %attr(755,root,root) %{_bindir}/Ogre*
-%attr(755,root,root) %{_bindir}/rcapsdump
-%attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
+#%%attr(755,root,root) %{_bindir}/rcapsdump
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
-%{_libdir}/libOgreMain.la
-%{_libdir}/libCEGUIOgreRenderer.la
+#%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
+#%{_libdir}/libOgreMain.la
+#%{_libdir}/libCEGUIOgreRenderer.la
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
-%{_pkgconfigdir}/CEGUI-OGRE.pc
+%{_pkgconfigdir}/OGRE-PCZ.pc
+%{_pkgconfigdir}/OGRE-Paging.pc
 
 %files examples
 %defattr(644,root,root,755)
