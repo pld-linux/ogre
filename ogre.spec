@@ -89,8 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
-cd build
-%{__make} install \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/OGRE/*.la
