@@ -1,5 +1,5 @@
 #
-# TODO: --enable-ogre-demos?
+# TODO: - bconds for rest of the plugins
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -12,24 +12,22 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.6.5
-Release:	1
+Version:	1.7.0p1
+Release:	0.1
 License:	LGPL
 Group:		Applications
-Source0:	http://dl.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
-# Source0-md5:	9e863029f3befe013adefa7f66dbb13c
+Source0:	http://downloads.sourceforge.net/ogre/%{name}-v%{_ver}.tar.bz2
+# Source0-md5:	ac06fcb8f550019f4f12e5ca27699063
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
 %{?with_cg:BuildRequires:	cg-devel}
+BuildRequires:	cmake
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:1.5
 BuildRequires:	pkgconfig
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXrandr-devel
@@ -78,15 +76,10 @@ Przykłady do OGRE.
 %setup -q -n %{name}
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
-%configure \
-	--%{?with_cg:en}%{!?with_cg:dis}able-cg \
-	--disable-devil \
-	--disable-openexr
+install -d build
+cd build
+%cmake .. \
+	-DCMAKE_INSTALL_PREFIX="%{_prefix}"
 
 %{__make}
 
@@ -96,6 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -109,23 +103,30 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS README INSTALL
+%doc AUTHORS BUGS README
 %attr(755,root,root) %{_bindir}/Ogre*
-%attr(755,root,root) %{_bindir}/rcapsdump
-%attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
+%attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libOgre*.so
-%attr(755,root,root) %{_libdir}/libCEGUIOgre*.so
-%{_libdir}/libOgreMain.la
-%{_libdir}/libCEGUIOgreRenderer.la
+%attr(755,root,root) %{_libdir}/libOgreMain.so
+%attr(755,root,root) %{_libdir}/libOgrePaging.so
+%attr(755,root,root) %{_libdir}/libOgreProperty.so
+%attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so
+%attr(755,root,root) %{_libdir}/libOgreTerrain.so
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
-%{_pkgconfigdir}/CEGUI-OGRE.pc
+%{_pkgconfigdir}/OGRE-PCZ.pc
+%{_pkgconfigdir}/OGRE-Paging.pc
+%{_pkgconfigdir}/OGRE-Property.pc
+%{_pkgconfigdir}/OGRE-RTShaderSystem.pc
+%{_pkgconfigdir}/OGRE-Terrain.pc
 
 %files examples
 %defattr(644,root,root,755)
