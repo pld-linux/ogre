@@ -1,5 +1,6 @@
 #
 # TODO: - bconds for rest of the plugins
+#	- fix build on 64 bits
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
