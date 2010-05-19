@@ -83,7 +83,7 @@ cd build
 	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64
+	-DWANT_LIB64=TRUE
 %endif
 
 %{__make}
