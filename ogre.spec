@@ -1,5 +1,5 @@
 #
-# TODO: - bconds for rest of the plugins
+# TODO: - bconds for the rest of the plugins
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -13,8 +13,8 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.7.2
-Release:	2
-License:	LGPL
+Release:	3
+License:	MIT
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{_ver}.tar.bz2
 # Source0-md5:	dd6574b8d906a74950c1e05633b2e96f
@@ -23,6 +23,7 @@ BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
 BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	boost-devel
 %{?with_cg:BuildRequires:	cg-devel}
 BuildRequires:	cmake
 BuildRequires:	cppunit-devel >= 1.10.0
@@ -79,7 +80,9 @@ Przykłady do OGRE.
 %build
 install -d build
 cd build
-%cmake ..
+# "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
+%cmake .. \
+	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None}
 
 %{__make}
 
@@ -92,8 +95,6 @@ cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/OGRE/*.la
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -102,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS README
+%doc AUTHORS BUGS COPYING README
 %attr(755,root,root) %{_bindir}/Ogre*
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so
@@ -126,6 +127,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/OGRE-Property.pc
 %{_pkgconfigdir}/OGRE-RTShaderSystem.pc
 %{_pkgconfigdir}/OGRE-Terrain.pc
+%dir %{_libdir}/OGRE
+%{_libdir}/OGRE/cmake
 
 %files examples
 %defattr(644,root,root,755)
