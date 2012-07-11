@@ -1,0 +1,11 @@
+--- ogre_src_v1-8-0/CMake/Dependencies.cmake~	2012-05-25 21:48:44.000000000 +0200
++++ ogre_src_v1-8-0/CMake/Dependencies.cmake	2012-07-11 14:26:31.685404862 +0200
+@@ -127,7 +127,7 @@
+ endif()
+ set(Boost_ADDITIONAL_VERSIONS "1.50" "1.50.0" "1.49" "1.49.0" "1.48" "1.48.0" "1.47" "1.47.0" "1.46" "1.46.0" "1.45" "1.45.0" "1.44" "1.44.0" "1.42" "1.42.0" "1.41.0" "1.41" "1.40.0" "1.40")
+ # Components that need linking (NB does not include header-only components like bind)
+-set(OGRE_BOOST_COMPONENTS thread date_time)
++set(OGRE_BOOST_COMPONENTS system thread date_time)
+ find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
+ if (NOT Boost_FOUND)
+ 	# Try again with the other type of libs

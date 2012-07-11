@@ -18,6 +18,7 @@ License:	MIT
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{_ver}.tar.bz2
 # Source0-md5:	3b9bcd34a39891a8bf0385ae0c5c670b
+Patch0:		boost-1.50.patch
 URL:		http://www.ogre3d.org/
 BuildRequires:	CEGUI-devel
 BuildRequires:	FreeImage-devel
@@ -76,6 +77,7 @@ Przykłady do OGRE.
 
 %prep
 %setup -q -n %{name}_src_v%{_ver}
+%patch0 -p1
 
 %build
 install -d build
@@ -106,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS COPYING README
 %attr(755,root,root) %{_bindir}/Ogre*
 %dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/*.so
+%attr(755,root,root) %{_libdir}/OGRE/*.so*
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*.*
