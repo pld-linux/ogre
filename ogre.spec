@@ -3,12 +3,13 @@
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
+%bcond_with	samples		# build samples (not installed anyway)
 
 %ifnarch %{ix86} %{x8664}
 %undefine	with_cg
 %endif
 
-%define _ver    %(echo %{version} | tr . -)
+%define fver    %(echo %{version} | tr . -)
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
@@ -16,17 +17,18 @@ Version:	1.8.0
 Release:	1
 License:	MIT
 Group:		Applications
-Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{_ver}.tar.bz2
+Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{fver}.tar.bz2
 # Source0-md5:	3b9bcd34a39891a8bf0385ae0c5c670b
 Patch0:		boost-1.50.patch
 URL:		http://www.ogre3d.org/
-BuildRequires:	CEGUI-devel
+%{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
-BuildRequires:	OpenEXR-devel
+# no makefiles for EXR plugin
+#BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	boost-devel
 %{?with_cg:BuildRequires:	cg-devel}
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.6.2
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
@@ -76,7 +78,7 @@ OGRE samples.
 Przykłady do OGRE.
 
 %prep
-%setup -q -n %{name}_src_v%{_ver}
+%setup -q -n %{name}_src_v%{fver}
 %patch0 -p1
 
 %build
@@ -84,7 +86,8 @@ install -d build
 cd build
 # "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
 %cmake .. \
-	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None}
+	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
+	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
 
 %{__make}
 
@@ -106,7 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS BUGS COPYING README
-%attr(755,root,root) %{_bindir}/Ogre*
+%attr(755,root,root) %{_bindir}/OgreMeshUpgrader
+%attr(755,root,root) %{_bindir}/OgreXMLConverter
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/*.so*
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
