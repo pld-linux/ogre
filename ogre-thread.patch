@@ -1,0 +1,12 @@
+--- CMake/ConfigureBuild.cmake.thread	2012-09-02 00:27:14.000000000 -0500
++++ CMake/ConfigureBuild.cmake	2012-12-09 23:48:31.709984746 -0600
+@@ -178,6 +178,9 @@
+   if (OGRE_CONFIG_THREADS GREATER 0)
+     set(OGRE_CFLAGS "-pthread")
+     set(OGRE_ADDITIONAL_LIBS "${OGRE_ADDITIONAL_LIBS} -lpthread")
++    if (OGRE_THREAD_PROVIDER EQUAL 1)
++      set(OGRE_ADDITIONAL_LIBS "${OGRE_ADDITIONAL_LIBS} -lboost_system-mt")
++    endif ()
+   endif ()
+   if (OGRE_STATIC)
+     if (OGRE_CONFIG_THREADS)

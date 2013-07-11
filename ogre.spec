@@ -13,12 +13,12 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.8.0
-Release:	2
+Version:	1.8.1
+Release:	1
 License:	MIT
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{fver}.tar.bz2
-# Source0-md5:	3b9bcd34a39891a8bf0385ae0c5c670b
+# Source0-md5:	b85e3dcf370a46b3a8624d4fdd722d39
 Patch0:		boost-1.50.patch
 URL:		http://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
@@ -34,6 +34,7 @@ BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	tinyxml-devel
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXrandr-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
