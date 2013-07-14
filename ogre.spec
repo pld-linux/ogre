@@ -26,7 +26,7 @@ BuildRequires:	FreeImage-devel
 # no makefiles for EXR plugin
 #BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	boost-devel
+BuildRequires:	boost-devel >= 1.40
 %{?with_cg:BuildRequires:	cg-devel}
 BuildRequires:	cmake >= 2.6.2
 BuildRequires:	cppunit-devel >= 1.10.0
@@ -35,8 +35,10 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.600
 BuildRequires:	tinyxml-devel
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXaw-devel
 BuildRequires:	xorg-lib-libXrandr-devel
+BuildRequires:	xorg-lib-libXt-devel
 BuildRequires:	xorg-lib-libXxf86vm-devel
 BuildRequires:	xorg-proto-xf86vidmodeproto-devel
 BuildRequires:	zlib-devel
@@ -112,13 +114,21 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS BUGS COPYING README
 %attr(755,root,root) %{_bindir}/OgreMeshUpgrader
 %attr(755,root,root) %{_bindir}/OgreXMLConverter
-%dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/*.so*
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
+%dir %{_libdir}/OGRE
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so*
+%if %{with cg}
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_CgProgramManager.so*
+%endif
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_OctreeSceneManager.so*
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_OctreeZone.so*
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_PCZSceneManager.so*
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so*
+%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so*
 
 %files devel
 %defattr(644,root,root,755)
@@ -134,7 +144,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/OGRE-Property.pc
 %{_pkgconfigdir}/OGRE-RTShaderSystem.pc
 %{_pkgconfigdir}/OGRE-Terrain.pc
-%dir %{_libdir}/OGRE
 %{_libdir}/OGRE/cmake
 
 %files examples
