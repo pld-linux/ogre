@@ -14,7 +14,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.8.1
-Release:	8
+Release:	9
 License:	MIT
 Group:		Applications
 Source0:	http://downloads.sourceforge.net/ogre/%{name}_src_v%{fver}.tar.bz2
@@ -94,6 +94,7 @@ install -d build
 cd build
 # "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
 %cmake .. \
+	-DCMAKE_CXX_FLAGS="%{rpmcxxflags} -Wno-narrowing" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
 	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
 
