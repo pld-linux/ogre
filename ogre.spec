@@ -23,8 +23,7 @@ Patch1:		x32.patch
 URL:		http://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
-# no makefiles for EXR plugin
-#BuildRequires:	OpenEXR-devel
+BuildRequires:	OpenEXR-devel
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	boost-devel >= 1.40
 %{?with_cg:BuildRequires:	cg-devel}
@@ -94,6 +93,7 @@ install -d build
 cd build
 # "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
 %cmake .. \
+	-DCMAKE_CXX_FLAGS="%{rpmcxxflags}" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
 	-DOGRE_BUILD_DEPENDENCIES=FALSE \
 	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
@@ -117,7 +117,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS BUGS COPYING README
+%doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/OgreMeshUpgrader
 %attr(755,root,root) %{_bindir}/OgreXMLConverter
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
