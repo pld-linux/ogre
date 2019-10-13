@@ -86,7 +86,7 @@ Przykłady do OGRE.
 
 %prep
 %setup -q
-#%patch1 -p1
+%patch1 -p1
 
 %build
 
