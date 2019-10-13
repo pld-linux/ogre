@@ -1,5 +1,7 @@
 #
-# TODO: - bconds for the rest of the plugins
+# TODO:
+#  - bconds for the rest of the plugins
+#  - package csharp and python bindings
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -120,12 +122,23 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS README.md
 %attr(755,root,root) %{_bindir}/OgreMeshUpgrader
 %attr(755,root,root) %{_bindir}/OgreXMLConverter
+%attr(755,root,root) %{_bindir}/VRMLConverter
+%attr(755,root,root) %{_libdir}/libOgreBites.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreHLMS.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreOverlay.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreVolume.so.*.*.*
 %dir %{_libdir}/OGRE
+%attr(755,root,root) %{_libdir}/OGRE/Codec_EXR.so*
+%attr(755,root,root) %{_libdir}/OGRE/Codec_FreeImage.so*
+%attr(755,root,root) %{_libdir}/OGRE/Codec_STBI.so*
+%attr(755,root,root) %{_libdir}/OGRE/Plugin_DotScene.so*
+%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL3Plus.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so*
 %if %{with cg}
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_CgProgramManager.so*
@@ -135,6 +148,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_PCZSceneManager.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so*
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so*
+%dir %{_datadir}/OGRE
+%{_datadir}/OGRE/*.cfg
+%{_datadir}/OGRE/*.png
+%{_datadir}/OGRE/Media
 
 %files devel
 %defattr(644,root,root,755)
@@ -143,13 +160,24 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libOgreProperty.so
 %attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so
+%attr(755,root,root) %{_libdir}/libOgreBites.so
+%attr(755,root,root) %{_libdir}/libOgreHLMS.so
+%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so
+%attr(755,root,root) %{_libdir}/libOgreOverlay.so
+%attr(755,root,root) %{_libdir}/libOgreVolume.so
+%{_libdir}/libOgreGLSupport.a
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
-%{_pkgconfigdir}/OGRE-PCZ.pc
+%{_pkgconfigdir}/OGRE-Bites.pc
+%{_pkgconfigdir}/OGRE-HLMS.pc
+%{_pkgconfigdir}/OGRE-MeshLodGenerator.pc
+%{_pkgconfigdir}/OGRE-Overlay.pc
 %{_pkgconfigdir}/OGRE-Paging.pc
+%{_pkgconfigdir}/OGRE-PCZ.pc
 %{_pkgconfigdir}/OGRE-Property.pc
 %{_pkgconfigdir}/OGRE-RTShaderSystem.pc
 %{_pkgconfigdir}/OGRE-Terrain.pc
+%{_pkgconfigdir}/OGRE-Volume.pc
 %{_libdir}/OGRE/cmake
 
 %files examples
