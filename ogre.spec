@@ -75,9 +75,7 @@ Ten pakiet zawiera pliki nagłówkowe biblioteki OGRE.
 Summary:	OGRE samples
 Summary(pl.UTF-8):	Przykłady do OGRE
 Group:		Applications
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description examples
 OGRE samples.
