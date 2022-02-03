@@ -6,6 +6,7 @@
 # Conditional build:
 %bcond_with	cg		# build with cg
 %bcond_with	samples		# build samples (not installed anyway)
+%bcond_with	java		# Java support
 
 %ifnarch %{ix86} %{x8664} x32
 %undefine	with_cg
@@ -35,7 +36,7 @@ BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	pugixml-devel
-BuildRequires:	rpmbuild(macros) >= 1.600
+BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	tinyxml-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXaw-devel
@@ -96,7 +97,8 @@ cd build
 	-DCMAKE_CXX_FLAGS="%{rpmcxxflags}" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
 	-DOGRE_BUILD_DEPENDENCIES=FALSE \
-	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
+	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE} \
+	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA}
 
 %{__make}
 
