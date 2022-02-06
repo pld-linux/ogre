@@ -7,6 +7,7 @@
 %bcond_with	cg		# build with cg
 %bcond_with	samples		# build samples (not installed anyway)
 %bcond_with	java		# Java support
+%bcond_with	openexr		# OpenEXR plugin
 
 %ifnarch %{ix86} %{x8664} x32
 %undefine	with_cg
@@ -17,7 +18,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	1.12.2
-Release:	2
+Release:	3
 License:	MIT
 Group:		Applications
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -26,7 +27,7 @@ Patch1:		x32.patch
 URL:		http://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
-BuildRequires:	OpenEXR-devel
+%{?with_openexr:BuildRequires:	OpenEXR-devel}
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	boost-devel >= 1.40
 %{?with_cg:BuildRequires:	cg-devel}
@@ -98,7 +99,8 @@ cd build
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
 	-DOGRE_BUILD_DEPENDENCIES=FALSE \
 	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE} \
-	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA}
+	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA} \
+	%{cmake_on_off openexr OGRE_BUILD_PLUGIN_EXRCODEC}
 
 %{__make}
 
@@ -134,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreVolume.so.*.*.*
 %dir %{_libdir}/OGRE
-%attr(755,root,root) %{_libdir}/OGRE/Codec_EXR.so*
+%{?with_openexr:%attr(755,root,root) %{_libdir}/OGRE/Codec_EXR.so*}
 %attr(755,root,root) %{_libdir}/OGRE/Codec_FreeImage.so*
 %attr(755,root,root) %{_libdir}/OGRE/Codec_STBI.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_DotScene.so*
