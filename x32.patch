@@ -1,19 +1,17 @@
-diff -ur ogre_src_v1-8-1/OgreMain/include/OgrePlatform.h ogre_src_v1-8-1-x32/OgreMain/include/OgrePlatform.h
---- ogre_src_v1-8-1/OgreMain/include/OgrePlatform.h	2012-09-02 07:27:15.000000000 +0200
-+++ ogre_src_v1-8-1-x32/OgreMain/include/OgrePlatform.h	2015-06-15 23:34:03.582303164 +0200
-@@ -130,7 +130,7 @@
+--- ogre-1.12.13/OgreMain/include/OgrePlatform.h.orig	2022-02-07 17:47:25.723366601 +0100
++++ ogre-1.12.13/OgreMain/include/OgrePlatform.h	2022-02-07 17:48:50.842905469 +0100
+@@ -75,7 +75,7 @@ namespace Ogre {
  #endif
  
-     /* Find the arch type */
--#if defined(__x86_64__) || defined(_M_X64) || defined(_M_AMD64) || defined(_M_ARM64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arm64__) || defined(__aarch64__) || defined(__mips64) || defined(__mips64_)
-+#if (defined(__x86_64__) && !defined(__ILP32__)) || defined(_M_X64) || defined(_M_AMD64) || defined(_M_ARM64) || defined(__powerpc64__) || defined(__alpha__) || defined(__ia64__) || defined(__s390__) || defined(__s390x__) || defined(__arm64__) || defined(__aarch64__) || defined(__mips64) || defined(__mips64_)
- #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_64
- #else
- #   define OGRE_ARCH_TYPE OGRE_ARCHITECTURE_32
-diff -ur ogre_src_v1-8-1/OgreMain/src/OgrePlatformInformation.cpp ogre_src_v1-8-1-x32/OgreMain/src/OgrePlatformInformation.cpp
---- ogre_src_v1-8-1/OgreMain/src/OgrePlatformInformation.cpp	2012-09-02 07:27:15.000000000 +0200
-+++ ogre_src_v1-8-1-x32/OgreMain/src/OgrePlatformInformation.cpp	2015-06-15 23:36:47.257495085 +0200
-@@ -116,7 +116,7 @@
+ /* Find the arch type */
+-#if defined(__x86_64__) || defined(_M_X64) || defined(_M_X64) || defined(_M_AMD64) \
++#if ((defined(__x86_64__) || defined(_M_X64) || defined(_M_X64) || defined(_M_AMD64)) && !defined(__ILP32__)) \
+  || defined(__ppc64__) \
+  || defined(__arm64__) || defined(__aarch64__) || defined(_M_ARM64) \
+  || defined(__mips64) || defined(__mips64_) \
+--- ogre-1.12.13/OgreMain/src/OgrePlatformInformation.cpp.orig	2021-08-04 20:33:45.000000000 +0200
++++ ogre-1.12.13/OgreMain/src/OgrePlatformInformation.cpp	2022-02-07 17:47:25.726699917 +0100
+@@ -118,7 +118,7 @@ namespace Ogre {
          }
      #endif
  #elif (OGRE_COMPILER == OGRE_COMPILER_GNUC || OGRE_COMPILER == OGRE_COMPILER_CLANG) && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN
@@ -22,7 +20,7 @@ diff -ur ogre_src_v1-8-1/OgreMain/src/OgrePlatformInformation.cpp ogre_src_v1-8-
             return true;
         #else
          unsigned oldFlags, newFlags;
-@@ -170,7 +170,7 @@
+@@ -158,7 +158,7 @@ namespace Ogre {
          result._edx = CPUInfo[3];
          return result._eax;
  #elif (OGRE_COMPILER == OGRE_COMPILER_GNUC || OGRE_COMPILER == OGRE_COMPILER_CLANG) && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN
@@ -31,7 +29,7 @@ diff -ur ogre_src_v1-8-1/OgreMain/src/OgrePlatformInformation.cpp ogre_src_v1-8-
          __asm__
          (
              "cpuid": "=a" (result._eax), "=b" (result._ebx), "=c" (result._ecx), "=d" (result._edx) : "a" (query)
-@@ -233,7 +233,7 @@
+@@ -232,7 +232,7 @@ namespace Ogre {
          }
      #endif
  #elif (OGRE_COMPILER == OGRE_COMPILER_GNUC || OGRE_COMPILER == OGRE_COMPILER_CLANG) && OGRE_PLATFORM != OGRE_PLATFORM_EMSCRIPTEN

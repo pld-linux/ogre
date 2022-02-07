@@ -1,7 +1,15 @@
 #
 # TODO:
 #  - bconds for the rest of the plugins
+#  - subpackages? (Qt library, some plugins?)
 #  - package csharp and python bindings
+#	/usr/lib/cli/ogre-sharp-1.12.13/Ogre.dll
+#	/usr/lib/cli/ogre-sharp-1.12.13/libOgre.so
+#	/usr/lib/libOgreBitesQt.so
+#	/usr/lib/libOgreBitesQt.so.1.12.13
+#  - GLSL Optimizer: GLSL Optimizer <http://github.com/aras-p/glsl-optimizer/>
+#  - HLSL2GLSL: HLSL2GLSL <http://hlsl2glslfork.googlecode.com/>
+#
 #
 # Conditional build:
 %bcond_with	cg		# build with cg
@@ -17,27 +25,34 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.12.2
-Release:	3
+Version:	1.12.13
+Release:	1
 License:	MIT
-Group:		Applications
+Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	6a1187615abb0eee5c658578da9cf001
+# Source0-md5:	907c68d19e16806462f14b9746a27411
 Patch1:		x32.patch
-URL:		http://www.ogre3d.org/
+URL:		https://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
 %{?with_openexr:BuildRequires:	OpenEXR-devel}
+BuildRequires:	OpenGL-devel >= 3.0
 BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGLESv2-devel >= 2.0
+BuildRequires:	Qt5Core-devel >= 5
+BuildRequires:	Qt5Gui-devel >= 5
+BuildRequires:	SDL2-devel >= 2
+BuildRequires:	assimp-devel
 BuildRequires:	boost-devel >= 1.40
 %{?with_cg:BuildRequires:	cg-devel}
 BuildRequires:	cmake >= 2.6.2
 BuildRequires:	cppunit-devel >= 1.10.0
 BuildRequires:	freetype-devel >= 2.1.0
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	pkgconfig
 BuildRequires:	pugixml-devel
 BuildRequires:	rpmbuild(macros) >= 1.742
+BuildRequires:	swig-python >= 3.0.8
 BuildRequires:	tinyxml-devel
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xorg-lib-libXaw-devel
@@ -62,7 +77,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	FreeImage-devel
 Requires:	freetype-devel >= 2.1.0
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:4.7
 Requires:	zlib-devel
 Requires:	zziplib-devel
 # libOgrePlatform additionally: XFree86-devel/xorg-lib-libX11-devel OpenGL-GLU-devel
@@ -97,10 +112,11 @@ cd build
 %cmake .. \
 	-DCMAKE_CXX_FLAGS="%{rpmcxxflags}" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
-	-DOGRE_BUILD_DEPENDENCIES=FALSE \
-	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE} \
+	-DOGRE_BUILD_COMPONENT_HLMS=TRUE \
 	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA} \
-	%{cmake_on_off openexr OGRE_BUILD_PLUGIN_EXRCODEC}
+	-DOGRE_BUILD_DEPENDENCIES=FALSE \
+	%{cmake_on_off openexr OGRE_BUILD_PLUGIN_EXRCODEC} \
+	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
 
 %{__make}
 
@@ -113,6 +129,9 @@ cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# packaged as %doc
+%{__rm} -r $RPM_BUILD_ROOT%{_docdir}/OGRE
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -121,11 +140,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS README.md
+%doc AUTHORS README.md Docs/{1.*-Notes.md,ChangeLog.md,License.md}
+%attr(755,root,root) %{_bindir}/OgreAssimpConverter
 %attr(755,root,root) %{_bindir}/OgreMeshUpgrader
 %attr(755,root,root) %{_bindir}/OgreXMLConverter
 %attr(755,root,root) %{_bindir}/VRMLConverter
 %attr(755,root,root) %{_libdir}/libOgreBites.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreBitesQt.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreHLMS.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so.*.*.*
@@ -136,11 +157,11 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
 %attr(755,root,root) %{_libdir}/libOgreVolume.so.*.*.*
 %dir %{_libdir}/OGRE
+%attr(755,root,root) %{_libdir}/OGRE/Codec_Assimp.so*
 %{?with_openexr:%attr(755,root,root) %{_libdir}/OGRE/Codec_EXR.so*}
 %attr(755,root,root) %{_libdir}/OGRE/Codec_FreeImage.so*
 %attr(755,root,root) %{_libdir}/OGRE/Codec_STBI.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_DotScene.so*
-%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL3Plus.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_BSPSceneManager.so*
 %if %{with cg}
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_CgProgramManager.so*
@@ -150,6 +171,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_PCZSceneManager.so*
 %attr(755,root,root) %{_libdir}/OGRE/Plugin_ParticleFX.so*
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so*
+%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL3Plus.so*
+%attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GLES2.so*
 %dir %{_datadir}/OGRE
 %{_datadir}/OGRE/*.cfg
 %{_datadir}/OGRE/*.png
@@ -157,17 +180,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libOgreBites.so
+%attr(755,root,root) %{_libdir}/libOgreBitesQt.so
+%attr(755,root,root) %{_libdir}/libOgreHLMS.so
 %attr(755,root,root) %{_libdir}/libOgreMain.so
+%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so
+%attr(755,root,root) %{_libdir}/libOgreOverlay.so
 %attr(755,root,root) %{_libdir}/libOgrePaging.so
 %attr(755,root,root) %{_libdir}/libOgreProperty.so
 %attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so
 %attr(755,root,root) %{_libdir}/libOgreTerrain.so
-%attr(755,root,root) %{_libdir}/libOgreBites.so
-%attr(755,root,root) %{_libdir}/libOgreHLMS.so
-%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so
-%attr(755,root,root) %{_libdir}/libOgreOverlay.so
 %attr(755,root,root) %{_libdir}/libOgreVolume.so
-%{_libdir}/libOgreGLSupport.a
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
 %{_pkgconfigdir}/OGRE-Bites.pc
