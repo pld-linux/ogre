@@ -1,0 +1,23 @@
+--- ogre-1.12.13/CMake/Dependencies.cmake.orig	2021-08-04 20:33:45.000000000 +0200
++++ ogre-1.12.13/CMake/Dependencies.cmake	2022-02-07 22:53:08.197330225 +0100
+@@ -298,8 +298,7 @@ find_package(OpenEXR)
+ macro_log_feature(OPENEXR_FOUND "OpenEXR" "Load High dynamic range images" "http://www.openexr.com/" FALSE "" "")
+ 
+ # Python
+-set(Python_ADDITIONAL_VERSIONS 3.4) # allows using python3 on Ubuntu 14.04
+-find_package(PythonInterp)
++find_package(PythonInterp 3)
+ find_package(PythonLibs)
+ macro_log_feature(PYTHONLIBS_FOUND "Python" "Language bindings to use OGRE from Python" "http://www.python.org/" FALSE "" "")
+ 
+--- ogre-1.12.13/Components/Python/CMakeLists.txt.orig	2021-08-04 20:33:45.000000000 +0200
++++ ogre-1.12.13/Components/Python/CMakeLists.txt	2022-02-07 21:18:38.364713012 +0100
+@@ -8,7 +8,7 @@ include_directories(${PYTHON_INCLUDE_PAT
+ include_directories("${PROJECT_BINARY_DIR}/include" "${PROJECT_SOURCE_DIR}/OgreMain/include")
+ include(${SWIG_USE_FILE})
+ 
+-set(PYTHON_SITE_PACKAGES lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages/Ogre/)
++set(PYTHON_SITE_PACKAGES lib${LIB_SUFFIX}/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages/Ogre/)
+ 
+ if(SKBUILD)
+     set(PYTHON_SITE_PACKAGES Ogre/)

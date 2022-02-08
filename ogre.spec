@@ -2,11 +2,9 @@
 # TODO:
 #  - bconds for the rest of the plugins
 #  - subpackages? (Qt library, some plugins?)
-#  - package csharp and python bindings
+#  - package csharp bindings (adjust dirs for mono?)
 #	/usr/lib/cli/ogre-sharp-1.12.13/Ogre.dll
 #	/usr/lib/cli/ogre-sharp-1.12.13/libOgre.so
-#	/usr/lib/libOgreBitesQt.so
-#	/usr/lib/libOgreBitesQt.so.1.12.13
 #  - GLSL Optimizer: GLSL Optimizer <http://github.com/aras-p/glsl-optimizer/>
 #  - HLSL2GLSL: HLSL2GLSL <http://hlsl2glslfork.googlecode.com/>
 #
@@ -14,7 +12,9 @@
 # Conditional build:
 %bcond_with	cg		# build with cg
 %bcond_with	samples		# build samples (not installed anyway)
+%bcond_with	dotnet		# C# support
 %bcond_with	java		# Java support
+%bcond_without	python		# Python support
 %bcond_with	openexr		# OpenEXR plugin
 
 %ifnarch %{ix86} %{x8664} x32
@@ -31,6 +31,7 @@ License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	907c68d19e16806462f14b9746a27411
+Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 URL:		https://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
@@ -51,6 +52,7 @@ BuildRequires:	freetype-devel >= 2.1.0
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	pkgconfig
 BuildRequires:	pugixml-devel
+%{?with_python:BuildRequires:	python3-devel >= 1:3.4}
 BuildRequires:	rpmbuild(macros) >= 1.742
 BuildRequires:	swig-python >= 3.0.8
 BuildRequires:	tinyxml-devel
@@ -88,6 +90,18 @@ This is the package containing the header files for OGRE library.
 %description devel -l pl.UTF-8
 Ten pakiet zawiera pliki nagłówkowe biblioteki OGRE.
 
+%package -n python3-ogre
+Summary:	Python interface to Ogre library
+Summary(pl.UTF-8):	Pythonowy interfejs do biblioteki Ogre
+Group:		Libraries/Python
+Requires:	%{name} = %{version}-%{release}
+
+%description -n python3-ogre
+Python interface to Ogre library.
+
+%description -n python3-ogre -l pl.UTF-8
+Pythonowy interfejs do biblioteki Ogre.
+
 %package examples
 Summary:	OGRE samples
 Summary(pl.UTF-8):	Przykłady do OGRE
@@ -102,10 +116,10 @@ Przykłady do OGRE.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch1 -p1
 
 %build
-
 install -d build
 cd build
 # "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
@@ -113,10 +127,13 @@ cd build
 	-DCMAKE_CXX_FLAGS="%{rpmcxxflags}" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
 	-DOGRE_BUILD_COMPONENT_HLMS=TRUE \
+	%{cmake_on_off dotnet OGRE_BUILD_COMPONENT_CSHARP} \
 	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA} \
+	%{cmake_on_off python OGRE_BUILD_COMPONENT_PYTHON} \
 	-DOGRE_BUILD_DEPENDENCIES=FALSE \
 	%{cmake_on_off openexr OGRE_BUILD_PLUGIN_EXRCODEC} \
-	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE}
+	%{!?with_samples:-DOGRE_BUILD_SAMPLES=FALSE} \
+	-DPython_EXECUTABLE:PATH=%{__python3}
 
 %{__make}
 
@@ -128,6 +145,9 @@ cp -pr Samples/* $RPM_BUILD_ROOT%{_examplesdir}/%{name}-%{version}
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+%py3_comp $RPM_BUILD_ROOT%{py3_sitedir}
+%py3_ocomp $RPM_BUILD_ROOT%{py3_sitedir}
 
 # packaged as %doc
 %{__rm} -r $RPM_BUILD_ROOT%{_docdir}/OGRE
@@ -204,6 +224,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/OGRE-Terrain.pc
 %{_pkgconfigdir}/OGRE-Volume.pc
 %{_libdir}/OGRE/cmake
+
+%if %{with python}
+%files -n python3-ogre
+%defattr(644,root,root,755)
+%dir %{py3_sitedir}/Ogre
+%attr(755,root,root) %{py3_sitedir}/Ogre/*.so
+%{py3_sitedir}/Ogre/*.py
+%{py3_sitedir}/Ogre/__pycache__
+%endif
 
 %files examples
 %defattr(644,root,root,755)
