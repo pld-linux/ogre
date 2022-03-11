@@ -1,12 +1,12 @@
 #
 # TODO:
+#  - unbundle imgui
 #  - bconds for the rest of the plugins
 #  - subpackages? (Qt library, some plugins?)
 #  - package csharp bindings (adjust dirs for mono?)
 #	/usr/lib/cli/ogre-sharp-1.12.13/Ogre.dll
 #	/usr/lib/cli/ogre-sharp-1.12.13/libOgre.so
 #  - GLSL Optimizer: GLSL Optimizer <http://github.com/aras-p/glsl-optimizer/>
-#  - HLSL2GLSL: HLSL2GLSL <http://hlsl2glslfork.googlecode.com/>
 #
 #
 # Conditional build:
@@ -31,6 +31,8 @@ License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	60e71378fb97e4ff37012e9c162dafea
+Source1:	https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
+# Source1-md5:	bb710a24164a8dd54369bc4282d9d3b9
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 URL:		https://www.ogre3d.org/
@@ -115,12 +117,14 @@ OGRE samples.
 Przykłady do OGRE.
 
 %prep
-%setup -q
+%setup -q -a1
 %patch0 -p1
 %patch1 -p1
 
-%build
 install -d build
+%{__mv} imgui-1.85 build/
+
+%build
 cd build
 # "None" is an alias for release, but uses plain CMAKE_CXX_FLAGS; "PLD" build type is not supported
 %cmake .. \
