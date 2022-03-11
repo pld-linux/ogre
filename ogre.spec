@@ -25,12 +25,12 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	1.12.13
+Version:	13.3.1
 Release:	1
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	907c68d19e16806462f14b9746a27411
+# Source0-md5:	60e71378fb97e4ff37012e9c162dafea
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 URL:		https://www.ogre3d.org/
@@ -126,7 +126,6 @@ cd build
 %cmake .. \
 	-DCMAKE_CXX_FLAGS="%{rpmcxxflags}" \
 	-DCMAKE_BUILD_TYPE=%{?debug:Debug}%{!?debug:None} \
-	-DOGRE_BUILD_COMPONENT_HLMS=TRUE \
 	%{cmake_on_off dotnet OGRE_BUILD_COMPONENT_CSHARP} \
 	%{cmake_on_off java OGRE_BUILD_COMPONENT_JAVA} \
 	%{cmake_on_off python OGRE_BUILD_COMPONENT_PYTHON} \
@@ -165,17 +164,16 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/OgreMeshUpgrader
 %attr(755,root,root) %{_bindir}/OgreXMLConverter
 %attr(755,root,root) %{_bindir}/VRMLConverter
-%attr(755,root,root) %{_libdir}/libOgreBites.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreBitesQt.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreHLMS.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreMain.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreOverlay.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*.*
-%attr(755,root,root) %{_libdir}/libOgreVolume.so.*.*.*
+%attr(755,root,root) %{_libdir}/libOgreBites.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreBitesQt.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreMain.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreOverlay.so.*.*
+%attr(755,root,root) %{_libdir}/libOgrePaging.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreProperty.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreRTShaderSystem.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreTerrain.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreVolume.so.*.*
 %dir %{_libdir}/OGRE
 %attr(755,root,root) %{_libdir}/OGRE/Codec_Assimp.so*
 %{?with_openexr:%attr(755,root,root) %{_libdir}/OGRE/Codec_EXR.so*}
@@ -202,7 +200,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libOgreBites.so
 %attr(755,root,root) %{_libdir}/libOgreBitesQt.so
-%attr(755,root,root) %{_libdir}/libOgreHLMS.so
 %attr(755,root,root) %{_libdir}/libOgreMain.so
 %attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so
 %attr(755,root,root) %{_libdir}/libOgreOverlay.so
@@ -214,7 +211,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/OGRE
 %{_pkgconfigdir}/OGRE.pc
 %{_pkgconfigdir}/OGRE-Bites.pc
-%{_pkgconfigdir}/OGRE-HLMS.pc
 %{_pkgconfigdir}/OGRE-MeshLodGenerator.pc
 %{_pkgconfigdir}/OGRE-Overlay.pc
 %{_pkgconfigdir}/OGRE-Paging.pc

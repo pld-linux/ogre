@@ -1,14 +1,3 @@
---- ogre-1.12.13/OgreMain/include/OgrePlatform.h.orig	2022-02-07 17:47:25.723366601 +0100
-+++ ogre-1.12.13/OgreMain/include/OgrePlatform.h	2022-02-07 17:48:50.842905469 +0100
-@@ -75,7 +75,7 @@ namespace Ogre {
- #endif
- 
- /* Find the arch type */
--#if defined(__x86_64__) || defined(_M_X64) || defined(_M_X64) || defined(_M_AMD64) \
-+#if ((defined(__x86_64__) || defined(_M_X64) || defined(_M_X64) || defined(_M_AMD64)) && !defined(__ILP32__)) \
-  || defined(__ppc64__) \
-  || defined(__arm64__) || defined(__aarch64__) || defined(_M_ARM64) \
-  || defined(__mips64) || defined(__mips64_) \
 --- ogre-1.12.13/OgreMain/src/OgrePlatformInformation.cpp.orig	2021-08-04 20:33:45.000000000 +0200
 +++ ogre-1.12.13/OgreMain/src/OgrePlatformInformation.cpp	2022-02-07 17:47:25.726699917 +0100
 @@ -118,7 +118,7 @@ namespace Ogre {
