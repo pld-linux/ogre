@@ -26,7 +26,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	13.3.1
-Release:	1
+Release:	2
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -35,6 +35,7 @@ Source1:	https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
 # Source1-md5:	bb710a24164a8dd54369bc4282d9d3b9
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
+Patch2:		stringstream.patch
 URL:		https://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
@@ -120,6 +121,7 @@ Przykłady do OGRE.
 %setup -q -a1
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 install -d build
 %{__mv} imgui-1.85 build/

@@ -1,0 +1,10 @@
+--- ogre-13.3.1/OgreMain/include/OgrePrerequisites.h~	2022-02-17 13:56:55.000000000 +0100
++++ ogre-13.3.1/OgreMain/include/OgrePrerequisites.h	2022-03-12 10:40:20.699804609 +0100
+@@ -30,6 +30,7 @@
+ #include "OgrePlatform.h"
+ 
+ #include <string>
++#include <sstream>
+ #include <memory>
+ 
+ namespace Ogre {
