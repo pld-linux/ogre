@@ -25,14 +25,14 @@
 Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
-Version:	13.3.1
-Release:	3
+Version:	14.1.0
+Release:	1
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	60e71378fb97e4ff37012e9c162dafea
-Source1:	https://github.com/ocornut/imgui/archive/v1.85/imgui-1.85.tar.gz
-# Source1-md5:	bb710a24164a8dd54369bc4282d9d3b9
+# Source0-md5:	03ae2e402a0b203f4725570211a20f77
+Source1:	https://github.com/ocornut/imgui/archive/v1.89.9/imgui-1.89.9.tar.gz
+# Source1-md5:	f3b103659752740850aea996bf451daa
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 Patch2:		stringstream.patch
@@ -124,7 +124,7 @@ Przykłady do OGRE.
 %patch2 -p1
 
 install -d build
-%{__mv} imgui-1.85 build/
+%{__mv} imgui-1.89.9 build/
 
 %build
 cd build
@@ -197,10 +197,10 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL.so*
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GL3Plus.so*
 %attr(755,root,root) %{_libdir}/OGRE/RenderSystem_GLES2.so*
-%dir %{_datadir}/OGRE
-%{_datadir}/OGRE/*.cfg
-%{_datadir}/OGRE/*.png
-%{_datadir}/OGRE/Media
+%dir %{_datadir}/OGRE-14.1
+%{_datadir}/OGRE-14.1/*.cfg
+%{_datadir}/OGRE-14.1/*.png
+%{_datadir}/OGRE-14.1/Media
 
 %files devel
 %defattr(644,root,root,755)
