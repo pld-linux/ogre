@@ -31,8 +31,8 @@ License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	03ae2e402a0b203f4725570211a20f77
-Source1:	https://github.com/ocornut/imgui/archive/v1.89.9/imgui-1.89.9.tar.gz
-# Source1-md5:	f3b103659752740850aea996bf451daa
+Source1:	https://github.com/ocornut/imgui/archive/v1.89.8/imgui-1.89.8.tar.gz
+# Source1-md5:	ccfa9476c4a2e60a4282d3b611f3f433
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 Patch2:		stringstream.patch
@@ -124,7 +124,7 @@ Przykłady do OGRE.
 %patch2 -p1
 
 install -d build
-%{__mv} imgui-1.89.9 build/
+%{__mv} imgui-1.89.8 build/
 
 %build
 cd build
