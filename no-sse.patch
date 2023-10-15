@@ -1,0 +1,35 @@
+--- ogre-14.1.0/CMakeLists.txt~	2023-09-12 23:35:36.000000000 +0200
++++ ogre-14.1.0/CMakeLists.txt	2023-10-15 22:47:22.466739024 +0200
+@@ -120,17 +120,6 @@
+   set(CMAKE_DEBUG_POSTFIX "_d")
+ endif ()
+ 
+-# Set compiler specific build flags
+-if (NOT ANDROID AND NOT EMSCRIPTEN AND UNIX OR MINGW)
+-  if (CMAKE_SYSTEM_PROCESSOR MATCHES "x86|X86|amd64|AMD64")
+-    include(CheckCXXCompilerFlag)
+-    check_cxx_compiler_flag(-msse OGRE_GCC_HAS_SSE)
+-    if (OGRE_GCC_HAS_SSE)
+-      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -msse")
+-    endif ()
+-  endif()
+-endif()
+-
+ if(UNIX)
+   # This is a set of sensible warnings that provide meaningful output
+   set(OGRE_WARNING_FLAGS "-Wall -Winit-self -Wcast-qual -Wwrite-strings -Wextra -Wundef -Wmissing-declarations -Wno-unused-parameter -Wshadow -Wno-missing-field-initializers -Wno-long-long")
+--- ogre-14.1.0/OgreMain/include/OgrePlatformInformation.h~	2023-09-12 23:35:36.000000000 +0200
++++ ogre-14.1.0/OgreMain/include/OgrePlatformInformation.h	2023-10-15 22:57:14.148733203 +0200
+@@ -34,10 +34,10 @@
+ /* Define whether or not Ogre compiled with SSE support.
+ */
+ #if   OGRE_DOUBLE_PRECISION == 0 && OGRE_CPU == OGRE_CPU_X86 && OGRE_COMPILER == OGRE_COMPILER_MSVC
+-#   define __OGRE_HAVE_SSE  1
++#   define __OGRE_HAVE_SSE  0
+ #elif OGRE_DOUBLE_PRECISION == 0 && OGRE_CPU == OGRE_CPU_X86 && (OGRE_COMPILER == OGRE_COMPILER_GNUC || OGRE_COMPILER == OGRE_COMPILER_CLANG) && \
+       OGRE_PLATFORM != OGRE_PLATFORM_APPLE_IOS
+-#   define __OGRE_HAVE_SSE  1
++#   define __OGRE_HAVE_SSE  0
+ #endif
+ 
+ /* Define whether or not Ogre compiled with VFP support.

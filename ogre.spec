@@ -36,6 +36,7 @@ Source1:	https://github.com/ocornut/imgui/archive/v1.89.8/imgui-1.89.8.tar.gz
 Patch0:		%{name}-python.patch
 Patch1:		x32.patch
 Patch2:		stringstream.patch
+Patch3:		no-sse.patch
 URL:		https://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
@@ -122,6 +123,9 @@ Przykłady do OGRE.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%ifarch %{ix86}
+%patch3 -p1
+%endif
 
 install -d build
 %{__mv} imgui-1.89.8 build/
