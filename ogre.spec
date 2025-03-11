@@ -41,8 +41,8 @@ URL:		https://www.ogre3d.org/
 %{?with_samples:BuildRequires:	CEGUI-devel}
 BuildRequires:	FreeImage-devel
 %{?with_openexr:BuildRequires:	OpenEXR-devel}
-BuildRequires:	OpenGL-devel >= 3.0
 BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	OpenGL-devel >= 3.0
 BuildRequires:	OpenGLESv2-devel >= 2.0
 BuildRequires:	Qt5Core-devel >= 5
 BuildRequires:	Qt5Gui-devel >= 5
@@ -120,11 +120,11 @@ Przykłady do OGRE.
 
 %prep
 %setup -q -a1
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%patch -P 0 -p1
+%patch -P 1 -p1
+%patch -P 2 -p1
 %ifarch %{ix86}
-%patch3 -p1
+%patch -P 3 -p1
 %endif
 
 install -d build
