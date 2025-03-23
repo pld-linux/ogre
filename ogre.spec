@@ -26,7 +26,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	14.1.0
-Release:	3
+Release:	4
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -49,6 +49,7 @@ BuildRequires:	Qt5Gui-devel >= 5
 BuildRequires:	SDL2-devel >= 2
 BuildRequires:	assimp-devel
 BuildRequires:	boost-devel >= 1.40
+BuildRequires:	bullet-devel
 %{?with_cg:BuildRequires:	cg-devel}
 BuildRequires:	cmake >= 2.6.2
 BuildRequires:	cppunit-devel >= 1.10.0
@@ -176,6 +177,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/VRMLConverter
 %attr(755,root,root) %{_libdir}/libOgreBites.so.*.*
 %attr(755,root,root) %{_libdir}/libOgreBitesQt.so.*.*
+%attr(755,root,root) %{_libdir}/libOgreBullet.so
 %attr(755,root,root) %{_libdir}/libOgreMain.so.*.*
 %attr(755,root,root) %{_libdir}/libOgreMeshLodGenerator.so.*.*
 %attr(755,root,root) %{_libdir}/libOgreOverlay.so.*.*
