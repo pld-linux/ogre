@@ -14,7 +14,7 @@
 %bcond_with	samples		# build samples (not installed anyway)
 %bcond_with	dotnet		# C# support
 %bcond_with	java		# Java support
-%bcond_without	python		# Python support
+%bcond_with	python		# Python support
 %bcond_with	openexr		# OpenEXR plugin
 
 %ifnarch %{ix86} %{x8664} x32
@@ -26,7 +26,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	14.1.0
-Release:	5
+Release:	6
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
