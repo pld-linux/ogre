@@ -26,7 +26,7 @@ Summary:	Object-oriented Graphics Rendering Engine
 Summary(pl.UTF-8):	OGRE - zorientowany obiektowo silnik renderowania grafiki
 Name:		ogre
 Version:	14.1.0
-Release:	4
+Release:	5
 License:	MIT
 Group:		Applications/Graphics
 Source0:	https://github.com/OGRECave/ogre/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -83,6 +83,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki OGRE
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	FreeImage-devel
+Requires:	bullet-devel
 Requires:	freetype-devel >= 2.1.0
 Requires:	libstdc++-devel >= 6:4.7
 Requires:	zlib-devel
